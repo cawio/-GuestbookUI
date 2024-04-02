@@ -42,4 +42,11 @@ export class EntryService {
             },
         });
     }
+
+    likeEntry(entry: EntryDTO): Observable<EntryDTO> {
+        return this.http.put<EntryDTO>(
+            `${this.apiUrl}/entry/${entry.id}/like`,
+            entry
+        );
+    }
 }

@@ -11,6 +11,7 @@ import {
     addEntities,
     addEntity,
     removeEntities,
+    updateEntity,
     withEntities,
 } from '@ngrx/signals/entities';
 import { firstValueFrom } from 'rxjs';
@@ -80,6 +81,44 @@ export const EntryStore = signalStore(
                 } catch (error: unknown) {
                     patchState(state, { error: error });
                     snackbar.open('Error deleting entries');
+                } finally {
+                    patchState(state, { loading: false });
+                }
+            },
+            async likeEntry(entry: EntryDTO) {
+                const likedAlready = JSON.parse(
+                    localStorage.getItem('likedIds') || '[]'
+                ).includes(entry.id);
+
+                if (likedAlready) {
+                    snackbar.open('You already liked this entry');
+                    return;
+                }
+
+                try {
+                    patchState(state, { loading: true, error: '' });
+                    const updatedEntry = await firstValueFrom(
+                        entryService.likeEntry(entry)
+                    );
+                    localStorage.setItem(
+                        'likedIds',
+                        JSON.stringify([
+                            ...JSON.parse(
+                                localStorage.getItem('likedIds') || '[]'
+                            ),
+                            entry.id,
+                        ])
+                    );
+                    patchState(
+                        state,
+                        updateEntity({
+                            id: updatedEntry.id,
+                            changes: updatedEntry,
+                        })
+                    );
+                } catch (error: unknown) {
+                    patchState(state, { error: error });
+                    snackbar.open('Error liking entry');
                 } finally {
                     patchState(state, { loading: false });
                 }

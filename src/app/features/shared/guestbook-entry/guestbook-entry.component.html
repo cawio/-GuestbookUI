@@ -1,10 +1,12 @@
 @if (entry) {
     <mat-card>
         <mat-card-header>
-            <mat-card-title class="title-nowrap">{{
-                entry.title
-            }}</mat-card-title>
-            <mat-card-subtitle>{{ entry.creatorName }}</mat-card-subtitle>
+            <div class="title-wrapper">
+                <mat-card-title class="title-nowrap">{{
+                    entry.title
+                }}</mat-card-title>
+                <mat-card-subtitle>{{ entry.creatorName }}</mat-card-subtitle>
+            </div>
             <button
                 mat-icon-button
                 [color]="entry.likes > 0 ? 'warn' : 'accent'"

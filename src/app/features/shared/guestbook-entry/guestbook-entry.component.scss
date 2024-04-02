@@ -37,3 +37,7 @@ mat-card-header {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.title-wrapper {
+    width: calc(100% - 48px);
+}

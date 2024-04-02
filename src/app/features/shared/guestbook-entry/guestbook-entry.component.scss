@@ -23,13 +23,21 @@ mat-card {
     justify-content: flex-end;
 }
 
-mat-card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; // this doesnt work because we cannot set a width
-}
-
 mat-card-content {
     overflow: auto;
     scrollbar-width: thin;
+}
+
+mat-card-header {
+    justify-content: space-between;
+}
+
+.title-nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.title-wrapper {
+    width: calc(100% - 48px);
 }
